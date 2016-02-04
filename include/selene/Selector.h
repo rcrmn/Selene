@@ -155,12 +155,8 @@ private:
     }
 public:
 
-    Selector(const Selector &) = default;
-    Selector(Selector &&) = default;
-    Selector & operator=(const Selector &) = default;
-    Selector & operator=(Selector &&) = default;
 
-    ~Selector() noexcept(false) {
+    ~Selector() {
         // If there is a functor is not empty, execute it and collect no args
         if (_functor_active) {
             ResetStackOnScopeExit save(_state);
@@ -218,7 +214,13 @@ public:
         });
     }
 
-    void operator=(lua_Number n) const {
+    void operator=(float n) const {
+        _evaluate_store([this, n]() {
+            detail::_push(_state, n);
+        });
+    }
+
+    void operator=(double n) const {
         _evaluate_store([this, n]() {
             detail::_push(_state, n);
         });
@@ -339,10 +341,16 @@ public:
         return detail::_pop(detail::_id<unsigned int>{}, _state);
     }
 
-    operator lua_Number() const {
+    operator float() const {
         ResetStackOnScopeExit save(_state);
         _evaluate_retrieve(1);
-        return detail::_pop(detail::_id<lua_Number>{}, _state);
+        return detail::_pop(detail::_id<float>{}, _state);
+    }
+
+    operator double() const {
+        ResetStackOnScopeExit save(_state);
+        _evaluate_retrieve(1);
+        return detail::_pop(detail::_id<double>{}, _state);
     }
 
     operator std::string() const {
