@@ -71,7 +71,7 @@ inline std::tuple<T...> _get_args(lua_State *state, _indices<N...>) {
 
 template <typename... T>
 inline std::tuple<T...> _get_args(lua_State *state) {
-    const std::size_t num_args = sizeof...(T);
+    _constexpr std::size_t num_args = sizeof...(T);
     return _get_args<T...>(state, typename _indices_rev_builder<num_args>::type());
 }
 }

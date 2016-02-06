@@ -156,7 +156,7 @@ private:
 public:
 
 
-    ~Selector() {
+    ~Selector() _noexcept_(false) {
         // If there is a functor is not empty, execute it and collect no args
         if (_functor_active) {
             ResetStackOnScopeExit save(_state);

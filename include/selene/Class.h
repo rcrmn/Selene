@@ -88,7 +88,7 @@ private:
 		std::function<Ret(T*, Args&&...)> lambda = [fun](T *t, Args&&... args) -> Ret {
 			return (t->*fun)(std::forward<Args>(args)...);
 		};
-		const int arity = detail::_arity<Ret>::value;
+		_constexpr int arity = detail::_arity<Ret>::value;
 		_funs.emplace_back(
 			sel::make_unique<ClassFun<arity, T, Ret, Args...>>(
 				state, std::string(fun_name),
@@ -102,7 +102,7 @@ private:
 		std::function<Ret(T*, Args...)> lambda = [fun](T *t, Args... args) {
 			return (t->*fun)(args...);
 		};
-		const int arity = detail::_arity<Ret>::value;
+		_constexpr int arity = detail::_arity<Ret>::value;
 		_funs.emplace_back(
 			sel::make_unique<ClassFun<arity, T, Ret, Args...>>(
 				state, std::string(fun_name),
@@ -117,7 +117,7 @@ private:
 			[fun](const T *t, Args... args) {
 				return (t->*fun)(args...);
 			};
-		const int arity = detail::_arity<Ret>::value;
+		_constexpr int arity = detail::_arity<Ret>::value;
 		_funs.emplace_back(
 			sel::make_unique<ClassFun<arity, const T, Ret, Args...>>(
 				state, std::string(fun_name),
