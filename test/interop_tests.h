@@ -48,8 +48,8 @@ bool test_multi_return_invoked_from_fun_ref(sel::State &state) {
 		return std::tuple<int, int>{1, 2};
 	};
 	int res_a = 0, res_b = 0;
-	sel::function<sel::Tuple<int&, int&>(void)> f = state["two_ints"];
-	sel::tie(res_a, res_b) = f();
+	sel::function<std::tuple<int, int>(void)> f = state["two_ints"];
+	std::tie(res_a, res_b) = f();
 	return invocation_count == 1;
 }
 
