@@ -147,8 +147,35 @@ public:
 		lua_pushvalue(state, -1);
 		lua_setfield(state, -1, "__index");
 	}
-private:
-	Class(const Class &){}
-	Class& operator=(const Class &){}
+
+	~Class() = default;
+	Class(const Class &) = delete;
+	Class& operator=(const Class &) = delete;
+
+#if __cplusplus < 201402L
+
+	Class(Class &&other)
+		: _name(std::move(other._name))
+		, _metatable_name(std::move(other._metatable_name))
+		, _ctor(std::move(other._ctor))
+		, _dtor(std::move(other._dtor))
+		, _funs(std::move(other._funs))
+	{
+	}
+
+	Class& operator=(Class &&other)
+	{
+		_name = std::move(other._name);
+		_metatable_name = std::move(other._metatable_name);
+		_ctor = std::move(other._ctor);
+		_dtor = std::move(other._dtor);
+		_funs = std::move(other._funs);
+	}
+
+#else
+	Class(Class &&other) = default;
+	Class& operator=(Class &&other) = default;
+#endif
+
 };
 }

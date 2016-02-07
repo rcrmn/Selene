@@ -162,18 +162,18 @@ public:
 	Selector(Selector &&c)
 		: _state(c._state), _registry(c._registry)
 		, _exception_handler(c._exception_handler)
-		, _name(c._name), _traversal(c._traversal), _key(c._key)
+		, _key(c._key)
 		, _functor_active(c._functor_active)
-		, _functor_arguments(c._functor_arguments)
+
+		, _name(std::move(c._name))
+		, _traversal(std::move(c._traversal))
+		, _functor_arguments(std::move(c._functor_arguments))
 	{
 		c._state = nullptr;
 		c._registry = nullptr;
 		c._exception_handler = nullptr;
-		c._name = "";
-		c._traversal = std::vector<LuaRef>();
 		c._key = LuaRef(nullptr);
 		c._functor_active = false;
-		c._functor_arguments = std::vector<LuaRef>();
 	}
 
 	Selector & operator=(Selector &&c)
@@ -181,20 +181,18 @@ public:
 		_state = c._state;
 		_registry = c._registry;
 		_exception_handler = c._exception_handler;
-		_name = c._name;
-		_traversal = c._traversal;
 		_key = c._key;
 		_functor_active = c._functor_active;
-		_functor_arguments = c._functor_arguments;
+
+		_name = std::move(c._name);
+		_traversal = std::move(c._traversal);
+		_functor_arguments = std::move(c._functor_arguments);
 
 		c._state = nullptr;
 		c._registry = nullptr;
 		c._exception_handler = nullptr;
-		c._name = "";
-		c._traversal = std::vector<LuaRef>();
 		c._key = LuaRef(nullptr);
 		c._functor_active = false;
-		c._functor_arguments = std::vector<LuaRef>();
 	}
 #else
 	Selector(Selector &&) = default;
