@@ -6,6 +6,8 @@
 #include <type_traits>
 #include "MetatableRegistry.h"
 
+#include "ObjPtr.h"
+
 extern "C" {
 #include <lua.h>
 #include <lauxlib.h>
@@ -61,7 +63,7 @@ using decay_primitive =
 template <typename T>
 inline T* _get(_id<T*>, lua_State *l, const int index) {
 	if(MetatableRegistry::IsType(l, typeid(T), index)) {
-		return (T*)lua_topointer(l, index);
+		return ((ObjPtr<T>*)lua_touserdata(l, index))->get();
 	}
 	return nullptr;
 }
@@ -75,7 +77,7 @@ inline T& _get(_id<T&>, lua_State *l, const int index) {
 		};
 	}
 
-	T *ptr = (T*)lua_topointer(l, index);
+	T *ptr = ((ObjPtr<T>*)lua_touserdata(l, index))->get();
 	if(ptr == nullptr) {
 		throw TypeError{MetatableRegistry::GetTypeName(l, typeid(T))};
 	}
@@ -140,7 +142,7 @@ struct GetParameterFromLuaTypeError {
 template <typename T>
 inline T* _check_get(_id<T*>, lua_State *l, const int index) {
 	MetatableRegistry::CheckType(l, typeid(T), index);
-	return (T *)lua_topointer(l, index);
+	return ((ObjPtr<T>*)lua_touserdata(l, index))->get();
 }
 
 template <typename T>
@@ -326,7 +328,8 @@ inline void _push(lua_State *l, T* t) {
 	lua_pushnil(l);
   }
   else {
-	lua_pushlightuserdata(l, t);
+	void *addr = lua_newuserdata(l, sizeof(ObjPtr<T>));
+	new( addr ) ObjPtr<T>( t );
 	MetatableRegistry::SetMetatable(l, typeid(T));
   }
 }
@@ -336,7 +339,8 @@ inline typename std::enable_if<
 	!is_primitive<typename std::decay<T>::type>::value
 >::type
 _push(lua_State *l, T& t) {
-	lua_pushlightuserdata(l, &t);
+	void *addr = lua_newuserdata(l, sizeof(ObjPtr<T>));
+	new( addr ) ObjPtr<T>( &t );
 	MetatableRegistry::SetMetatable(l, typeid(T));
 }
 
@@ -350,9 +354,8 @@ _push(lua_State *l, T&& t) {
 	{
 		throw CopyUnregisteredType(typeid(t));
 	}
-
-	void *addr = lua_newuserdata(l, sizeof(T));
-	new(addr) T(std::forward<T>(t));
+	void *addr = lua_newuserdata(l, sizeof(ObjPtr<T>));
+	new( addr ) ObjPtr<T>( new T(std::forward<T>(t)), true );
 	MetatableRegistry::SetMetatable(l, typeid(T));
 }
 

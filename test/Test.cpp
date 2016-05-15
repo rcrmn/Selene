@@ -7,6 +7,7 @@
 #include "selector_tests.h"
 #include "error_tests.h"
 #include "exception_tests.h"
+#include "multiclass_tests.h"
 #include <map>
 
 // A very simple testing framework
@@ -15,6 +16,8 @@
 using Test = bool(*)(sel::State &);
 using TestMap = std::map<const char *, Test>;
 static TestMap tests = {
+	//*
+	{"test_object_container", test_object_container},
 	{"test_load_error", test_load_error},
 	{"test_load_syntax_error", test_load_syntax_error},
 	{"test_do_syntax_error", test_do_syntax_error},
@@ -156,6 +159,9 @@ static TestMap tests = {
 
 // Executes all tests and returns the number of failures.
 int ExecuteAll() {
+	_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+	//_CrtSetBreakAlloc(77928);
+
 	const int num_tests = tests.size();
 	std::cout << "Executing " << num_tests << " tests..." << std::endl;
 	std::vector<std::string> failures;

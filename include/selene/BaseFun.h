@@ -7,6 +7,7 @@
 #include "primitives.h"
 #include <tuple>
 #include "util.h"
+#include "ObjPtr.h"
 
 namespace sel {
 struct BaseFun {

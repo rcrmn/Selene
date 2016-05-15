@@ -4,7 +4,9 @@
 
 struct Bar {
     int x;
-    Bar(int num) { x = num; }
+    Bar(int num) {
+		x = num;
+	}
 
     std::string Print(int y) {
         return std::to_string(x) + "+" + std::to_string(y);

@@ -108,10 +108,42 @@
     <ClInclude Include="..\include\selene\util.h">
       <Filter>Selene</Filter>
     </ClInclude>
+    <ClInclude Include="..\test\multiclass_tests.h">
+      <Filter>test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\selene\ObjPtr.h">
+      <Filter>Selene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\test\Test.cpp">
       <Filter>test</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\test\test.lua">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\test_class.lua">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\test_error.lua">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\test_exceptions.lua">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\test_gc.lua">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\test_metatable.lua">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\test_ref.lua">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\test_syntax_error.lua">
+      <Filter>test</Filter>
+    </None>
   </ItemGroup>
 </Project>

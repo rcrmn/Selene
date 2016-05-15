@@ -26,6 +26,7 @@
     <ClInclude Include="..\include\selene\MetatableRegistry.h" />
     <ClInclude Include="..\include\selene\Obj.h" />
     <ClInclude Include="..\include\selene\ObjFun.h" />
+    <ClInclude Include="..\include\selene\ObjPtr.h" />
     <ClInclude Include="..\include\selene\primitives.h" />
     <ClInclude Include="..\include\selene\references.h" />
     <ClInclude Include="..\include\selene\Registry.h" />
@@ -41,6 +42,7 @@
     <ClInclude Include="..\test\exception_tests.h" />
     <ClInclude Include="..\test\interop_tests.h" />
     <ClInclude Include="..\test\metatable_tests.h" />
+    <ClInclude Include="..\test\multiclass_tests.h" />
     <ClInclude Include="..\test\obj_tests.h" />
     <ClInclude Include="..\test\reference_tests.h" />
     <ClInclude Include="..\test\selector_tests.h" />
@@ -52,6 +54,16 @@
     <ProjectReference Include="lua\lua.vcxproj">
       <Project>{72233703-35ef-4a41-9b8f-60c9afaa4efb}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\test\test.lua" />
+    <None Include="..\test\test_class.lua" />
+    <None Include="..\test\test_error.lua" />
+    <None Include="..\test\test_exceptions.lua" />
+    <None Include="..\test\test_gc.lua" />
+    <None Include="..\test\test_metatable.lua" />
+    <None Include="..\test\test_ref.lua" />
+    <None Include="..\test\test_syntax_error.lua" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{BB345ED0-28BB-4C86-88E1-A1B86681B4CC}</ProjectGuid>

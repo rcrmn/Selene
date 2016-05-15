@@ -14,3 +14,16 @@ build/*
 *.lai
 *.la
 *.a
+
+# Visual C++ cache files
+ipch/
+*.aps
+*.ncb
+*.opensdf
+*.opendb
+*.sdf
+*.cachefile
+*.pidb
+*.idb
+*.tlog
+*.lastbuildstate
